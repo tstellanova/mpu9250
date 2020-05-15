@@ -79,6 +79,7 @@ pub use device::Releasable;
 pub use device::{Device, I2cDevice, NineDOFDevice, SpiDevice};
 
 /// Suported MPUx devices
+#[repr(u8)]
 pub enum MpuXDevice {
     /// MPU 9250
     MPU9250 = 0x71,
@@ -86,13 +87,17 @@ pub enum MpuXDevice {
     MPU9255 = 0x73,
     /// MPU 6500
     MPU6500 = 0x70,
+
+    /// ICM-20608G
+    ICM20608G = 0xAF,
 }
 
 impl MpuXDevice {
     fn imu_supported(b: u8) -> bool {
-        b == (MpuXDevice::MPU9250 as u8)
-        || b == (MpuXDevice::MPU9255 as u8)
-        || b == (MpuXDevice::MPU6500 as u8)
+        b ==  (MpuXDevice::ICM20608G as u8)   ||
+           b ==   (MpuXDevice::MPU9250 as u8)  ||
+           b == (MpuXDevice::MPU9255 as u8) ||
+            b == (MpuXDevice::MPU6500 as u8)
     }
 
     fn marg_supported(b: u8) -> bool {
